@@ -22,14 +22,36 @@ function Login() {
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Main = styled.main``;
 
 const Form = styled.form``;
 
-const Logo = styled.div``;
+const Logo = styled.div`
+  width: 250px;
+  img {
+    width: 100%;
+  }
+`;
 
-const InputContainer = styled.div``;
+const InputContainer = styled.div`
+  height: 25px;
+  width: 250px;
+  margin-top: 20px;
+  input {
+    height: 100%;
+    width: 100%;
+    background-color: #fafafa;
+    border: 1px solid gray;
+    padding: 5px;
+  }
+`;
 
 export default Login;
