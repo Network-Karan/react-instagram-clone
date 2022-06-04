@@ -16,6 +16,8 @@ function Login() {
           <InputContainer>
             <input type="password" placeholder="Password" />
           </InputContainer>
+
+          <button>Log In</button>
         </Form>
       </Main>
     </Container>
@@ -32,8 +34,31 @@ const Container = styled.div`
 
 const Main = styled.main``;
 
-const Form = styled.form``;
+const Form = styled.form`
+  background: #fff;
+  border: 1px solid lightgray;
+  padding: 20px;
+  min-width: 300px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
 
+  button {
+    height: 33px;
+    width: 230px;
+    background-color: #0095f6;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+  }
+`;
+ 
 const Logo = styled.div`
   width: 250px;
   img {
