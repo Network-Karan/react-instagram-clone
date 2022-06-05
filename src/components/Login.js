@@ -19,6 +19,12 @@ function Login() {
 
           <button>Log In</button>
         </Form>
+
+        <SignUpContainer>
+          <p>
+            Don't Have an account ?<span>SignUp</span>
+          </p>
+        </SignUpContainer>
       </Main>
     </Container>
   );
@@ -76,6 +82,27 @@ const InputContainer = styled.div`
     background-color: #fafafa;
     border: 1px solid gray;
     padding: 5px;
+  }
+`;
+
+const SignUpContainer = styled.div`
+  border: 1px solid lightgray;
+  padding: 20px;
+  background-color: #fff;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    font size: 14px;
+
+    span {
+      color: #18a4f8;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
   }
 `;
 
