@@ -23,12 +23,12 @@ function SignUp() {
               <input type="text" placeholder="PhotoURL (Optional)" />
             </InputContainer>
   
-            <button>Log In</button>
+            <button>Sign Up</button>
           </Form>
   
           <SignUpContainer>
             <p>
-              Don't Have an account ?<span>SignUp</span>
+              Have an account ?<span>Login</span>
             </p>
           </SignUpContainer>
         </Main>
