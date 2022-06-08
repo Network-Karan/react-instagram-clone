@@ -26,11 +26,11 @@ function SignUp() {
             <button>Sign Up</button>
           </Form>
   
-          <SignUpContainer>
+          <LoginContainer>
             <p>
               Have an account ?<span>Login</span>
             </p>
-          </SignUpContainer>
+          </LoginContainer>
         </Main>
       </Container>
     );
@@ -91,7 +91,7 @@ const InputContainer = styled.div`
   }
 `;
 
-const SignUpContainer = styled.div`
+const LoginContainer = styled.div`
   border: 1px solid lightgray;
   padding: 20px;
   background-color: #fff;
