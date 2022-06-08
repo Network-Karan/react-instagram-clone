@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styled from "styled-components";
 
 function SignUp() {
+
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [PhotoURL, setPhotoURL] = useState("")
   return (
       <Container>
         <Main>
@@ -11,16 +16,36 @@ function SignUp() {
             </Logo>
   
             <InputContainer>
-              <input type="email" placeholder="Email" />
+              <input 
+              type="email"
+              placeholder="Email" 
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
             </InputContainer>
             <InputContainer>
-              <input type="text" placeholder="Username" />
+              <input 
+              type="text" 
+              placeholder="Username" 
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+            />
             </InputContainer>
             <InputContainer>
-              <input type="password" placeholder="Password" />
+              <input 
+              type="password" 
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
             </InputContainer>
             <InputContainer>
-              <input type="text" placeholder="PhotoURL (Optional)" />
+              <input 
+              type="text" 
+              placeholder="PhotoURL (Optional)"
+              onChange={(e) => setPhotoURL(e.target.value)}
+              value={PhotoURL}
+              />
             </InputContainer>
   
             <button>Sign Up</button>
