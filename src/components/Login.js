@@ -1,28 +1,61 @@
-import React from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-
+import { auth } from "../firebase";
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+  const login = (e) => {
+    e.preventDefault();
+  
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const newUser = {
+          userName: userCredential.user.displayName,
+          photoURL: userCredential.user.photoURL,
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+        };
+
+        localStorage.setItem("user",JSON.stringify(newUser));
+        navigate("/");
+      } )
+      .catch((err) => alert(err));
+    };
   return (
     <Container>
       <Main>
-        <Form>
+        <Form onSubmit={login}>
           <Logo>
             <img src="./instagram-text-logo.png" alt="" />
           </Logo>
 
           <InputContainer>
-            <input type="email" placeholder="Email" />
+            <input 
+            type="email" 
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+           />
           </InputContainer>
           <InputContainer>
-            <input type="password" placeholder="Password" />
+            <input 
+            type="password" 
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+           />
           </InputContainer>
 
-          <button>Log In</button>
+          <button onClick={login}>Log In</button>
         </Form>
 
         <SignUpContainer>
           <p>
-            Don't Have an account ?<span>SignUp</span>
+            Don't Have an account ?
+            <span onClick={() => navigate("/signup")}>SignUp</span>
           </p>
         </SignUpContainer>
       </Main>
