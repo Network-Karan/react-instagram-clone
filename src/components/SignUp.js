@@ -1,16 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
-
+import { 
+  query,
+  collection,
+  where, 
+  getDocs, 
+  doc, 
+  setDoc 
+} from "firebase/firestore";
+import db, { auth } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 function SignUp() {
-
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
-  const [PhotoURL, setPhotoURL] = useState("")
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+
+  const createAccount = async (e) => {
+    e.preventDefault();
+    const username_query = await query(
+      collection(db, "users"),
+      where("userName", "==", userName)
+    );
+
+    const username_exists = await getDocs(username_query);
+
+    if (username_exists.docs.length === 0) {
+      if (userName.length > 0 && email.length > 0 && password.length > 0) {
+        createUserWithEmailAndPassword(auth, email, password)
+          .then(async (userCredential) => {
+            updateProfile(userCredential.user, {
+              displayName: userName,
+              photoURL: photoURL,
+            });
+
+            await setDoc(doc(db, "users", userCredential.user.uid), {
+              email,
+              userName,
+              photoURL,
+            });
+
+            setEmail("");
+            setPassword("");
+            setPhotoURL("");
+            setUserName("");
+            alert("Your Account Has Been Created");
+          })
+          .catch((err) => alert(err));
+      } else {
+        alert("Please fill the inputs");
+      }
+    } else {
+      alert("User Name Already Exists");
+    }
+  };
   return (
       <Container>
         <Main>
-          <Form>
+          <Form onSubmit={createAccount}>
             <Logo>
               <img src="./instagram-text-logo.png" alt="" />
             </Logo>
@@ -27,16 +74,15 @@ function SignUp() {
               <input 
               type="text" 
               placeholder="Username" 
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+              value={userName}
             />
             </InputContainer>
             <InputContainer>
               <input 
               type="password" 
               placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
+                
             />
             </InputContainer>
             <InputContainer>
@@ -44,11 +90,11 @@ function SignUp() {
               type="text" 
               placeholder="PhotoURL (Optional)"
               onChange={(e) => setPhotoURL(e.target.value)}
-              value={PhotoURL}
+              value={photoURL}
               />
             </InputContainer>
   
-            <button>Sign Up</button>
+            <button onClick={createAccount}>Sign Up</button>
           </Form>
   
           <LoginContainer>
