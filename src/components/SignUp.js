@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { 
+import {
   query,
   collection,
-  where, 
-  getDocs, 
-  doc, 
-  setDoc 
+  where,
+  getDocs,
+  setDoc,
+  doc,
 } from "firebase/firestore";
 import db, { auth } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+
+import { useNavigate } from "react-router-dom";
 function SignUp() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [photoURL, setPhotoURL] = useState("");
-
+  const navigate = useNavigate();
   const createAccount = async (e) => {
     e.preventDefault();
     const username_query = await query(
@@ -44,75 +46,79 @@ function SignUp() {
             setPassword("");
             setPhotoURL("");
             setUserName("");
-            alert("Your Account Has Been Created");
+            alert("Your Account is Created");
+            navigate("/login");
           })
           .catch((err) => alert(err));
       } else {
         alert("Please fill the inputs");
       }
     } else {
-      alert("User Name Already Exists");
+      alert("user Name is Exists");
     }
   };
   return (
-      <Container>
-        <Main>
-          <Form onSubmit={createAccount}>
-            <Logo>
-              <img src="./instagram-text-logo.png" alt="" />
-            </Logo>
-  
-            <InputContainer>
-              <input 
+    <Container>
+      <Main>
+        <Form onSubmit={createAccount}>
+          <Logo>
+            <img src="./instagram-text-logo.png" alt="" />
+          </Logo>
+
+          <InputContainer>
+            <input
               type="email"
-              placeholder="Email" 
+              placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
             />
-            </InputContainer>
-            <InputContainer>
-              <input 
-              type="text" 
-              placeholder="Username" 
+          </InputContainer>
+          <InputContainer>
+            <input
+              type="text"
+              placeholder="Username"
               onChange={(e) => setUserName(e.target.value)}
               value={userName}
             />
-            </InputContainer>
-            <InputContainer>
-              <input 
-              type="password" 
+          </InputContainer>
+          <InputContainer>
+            <input
+              type="password"
               placeholder="Password"
-                
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
             />
-            </InputContainer>
-            <InputContainer>
-              <input 
-              type="text" 
+          </InputContainer>
+          <InputContainer>
+            <input
+              type="text"
               placeholder="PhotoURL (Optional)"
               onChange={(e) => setPhotoURL(e.target.value)}
               value={photoURL}
-              />
-            </InputContainer>
-  
-            <button onClick={createAccount}>Sign Up</button>
-          </Form>
-  
-          <LoginContainer>
-            <p>
-              Have an account ?<span>Login</span>
-            </p>
-          </LoginContainer>
-        </Main>
-      </Container>
-    );
-  }
+            />
+          </InputContainer>
 
-  const Container = styled.div`
+          <button onClick={createAccount}>Sign Up</button>
+        </Form>
+
+        <LoginContainer>
+          <p>
+            Have an account ?{" "}
+            <span onClick={() => navigate("/login")}>Log In</span>
+          </p>
+        </LoginContainer>
+      </Main>
+    </Container>
+  );
+}
+
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 const Main = styled.main``;
@@ -121,13 +127,12 @@ const Form = styled.form`
   background: #fff;
   border: 1px solid lightgray;
   padding: 20px;
-  min-width: 300px; 
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 400px;
-
   button {
     height: 33px;
     width: 230px;
@@ -141,7 +146,7 @@ const Form = styled.form`
     cursor: pointer;
   }
 `;
- 
+
 const Logo = styled.div`
   width: 250px;
   img {
@@ -170,17 +175,14 @@ const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
   p {
-    font size: 14px;
-
+    font-size: 14px;
     span {
       color: #18a4f8;
       font-weight: 600;
       cursor: pointer;
     }
-
   }
 `;
 
-export default SignUp
+export default SignUp;
