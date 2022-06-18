@@ -1,17 +1,17 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../firebase";
 import { useStateValue } from "../StateProvider";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [{},dispatch] = useStateValue();
-  const navigate = useNavigate()
+  const [{}, dispatch] = useStateValue();
+  const navigate = useNavigate();
   const login = (e) => {
     e.preventDefault();
-  
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const newUser = {
@@ -22,15 +22,15 @@ function Login() {
         };
 
         dispatch({
-          type:'SET_USER',
-          user:newUser
-      })
+          type: "SET_USER",
+          user: newUser,
+        });
 
-        localStorage.setItem("user",JSON.stringify(newUser));
+        localStorage.setItem("user", JSON.stringify(newUser));
         navigate("/");
-      } )
+      })
       .catch((err) => alert(err));
-    };
+  };
   return (
     <Container>
       <Main>
@@ -40,20 +40,20 @@ function Login() {
           </Logo>
 
           <InputContainer>
-            <input 
-            type="email" 
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-           />
+            <input
+              type="email"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+            />
           </InputContainer>
           <InputContainer>
-            <input 
-            type="password" 
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-           />
+            <input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
           </InputContainer>
 
           <button onClick={login}>Log In</button>
@@ -62,7 +62,7 @@ function Login() {
         <SignUpContainer>
           <p>
             Don't Have an account ?
-            <span onClick={() => navigate("/signup")}>SignUp</span>
+            <span onClick={() => navigate("/signup")}>Sign Up</span>
           </p>
         </SignUpContainer>
       </Main>
@@ -84,13 +84,12 @@ const Form = styled.form`
   background: #fff;
   border: 1px solid lightgray;
   padding: 20px;
-  min-width: 300px; 
+  min-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 400px;
-
   button {
     height: 33px;
     width: 230px;
@@ -104,7 +103,7 @@ const Form = styled.form`
     cursor: pointer;
   }
 `;
- 
+
 const Logo = styled.div`
   width: 250px;
   img {
@@ -133,17 +132,13 @@ const SignUpContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
   p {
-    font size: 14px;
-
+    font-size: 14px;
     span {
       color: #18a4f8;
       font-weight: 600;
       cursor: pointer;
     }
-
   }
 `;
-
 export default Login;
