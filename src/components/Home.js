@@ -1,9 +1,13 @@
 import React from 'react'
-
+import { auth } from "../firebase";
 function Home() {
   return (
-    <div>Hello This is the Home Page</div>
-  )
+    <div>
+      <p>
+        {auth.currentUser ? auth.currentUser.displayName : "please login first"}
+      </p>
+    </div>
+  );
 }
 
 export default Home
